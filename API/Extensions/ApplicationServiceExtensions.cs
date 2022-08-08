@@ -14,13 +14,15 @@ namespace API.Extensions
   {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
+      services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
       /** Add Token service */
       services.AddScoped<ITokenService, TokenService>();
+
+      services.AddScoped<IPhotoService, PhotoService>();
 
       services.AddScoped<IUserRepository, UserRepository>();
 
       services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-      
 
       // Add services to the container.
       services.AddDbContext<API.Data.DataContext>(options =>
